@@ -31,9 +31,9 @@ brews:
     name: translate
     github:
       owner: yulintan
-      name: homebrew-translate
+      name: homebrew-tap
     commit_author:
-      name: yulin
+      name: yulintan
       email: yulinsiyu@gmail.com
     homepage: ""
     description: "CLI to translate words between languages"
