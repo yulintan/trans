@@ -16,4 +16,3 @@ brew install yulintan/tap/translate
 
 # TODO
 - Support looking up words in dictionary
-- Be able to specify default language which it will translate to

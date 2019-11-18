@@ -52,8 +52,9 @@ func main() {
 	var tl, provider, brief string
 
 	app := &cli.App{
-		Name:  "translate",
-		Usage: "translation words/sentencse in your terminal",
+		Name:    "translate",
+		Version: "v0.1.1",
+		Usage:   "translation words/sentencse in your terminal",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "target",
