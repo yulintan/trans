@@ -53,7 +53,7 @@ func main() {
 
 	app := &cli.App{
 		Name:  "translate",
-		Usage: "translation between English and Chinese",
+		Usage: "translation words/sentencse in your terminal",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "target",
