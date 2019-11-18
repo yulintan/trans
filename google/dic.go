@@ -1,4 +1,4 @@
-package youdao
+package google
 
 import (
 	"bytes"
@@ -21,18 +21,18 @@ func NewDic(cfg translator.Config) translator.Dictionary {
 }
 
 func (d *dic) Translate(word string) (string, error) {
-	endpoint := "http://fanyi.youdao.com/openapi.do"
+	endpoint := "https://translate.googleapis.com/translate_a/single"
 	u, err := url.Parse(endpoint)
 	if err != nil {
 		return "", err
 	}
+
 	parameters := url.Values{}
+	parameters.Add("client", "gtx")
+	parameters.Add("sl", "auto")
+	parameters.Add("tl", d.cfg.TargetLanguage)
+	parameters.Add("dt", "t")
 	parameters.Add("q", word)
-	parameters.Add("keyfrom", d.cfg.KeyFrom)
-	parameters.Add("key", d.cfg.Key)
-	parameters.Add("type", d.cfg.Type)
-	parameters.Add("doctype", d.cfg.DocType)
-	parameters.Add("version", "1.1")
 	u.RawQuery = parameters.Encode()
 
 	client := &http.Client{}
@@ -58,32 +58,46 @@ func (d *dic) Translate(word string) (string, error) {
 
 func (d *dic) PrettyPrint(s string) (string, error) {
 	if d.cfg.Brief == false {
+
 		dst := &bytes.Buffer{}
 		if err := json.Indent(dst, []byte(s), "", "  "); err != nil {
 			return "", nil
 		}
-
 		return dst.String(), nil
 	}
 
-	var transResult TransResult
+	var wrapper []interface{}
+	var transResult [][]interface{}
 	var result string
 
-	err := json.Unmarshal([]byte(s), &transResult)
+	err := json.Unmarshal([]byte(s), &wrapper)
+	if err != nil {
+		return "", err
+	}
+	temp, err := json.Marshal(wrapper[0])
 	if err != nil {
 		return "", err
 	}
 
-	for _, tran := range transResult.Translation {
-		result += tran + "\n"
+	err = json.Unmarshal(temp, &transResult)
+	if err != nil {
+		return "", err
 	}
 
-	for _, ex := range transResult.Basic.Explains {
-		result += ex + "\n"
-	}
+	// for _, r := range transResult[0] {
+	// 	switch v := r.(type) {
+	// 	case string:
+	// 		result += v + "\n"
+	// 	}
+	// }
 
-	if len(result) > 0 {
-		result = result[:len(result)-1]
+	// if len(result) > 0 {
+	// 	result = result[:len(result)-1]
+	// }
+
+	result, ok := transResult[0][0].(string)
+	if !ok {
+		return "", err
 	}
 
 	return result, nil

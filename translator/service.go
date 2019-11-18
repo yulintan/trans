@@ -15,8 +15,13 @@ func NewTranslator(dic Dictionary) Translator {
 }
 
 // Translate translates word into targeted language (English or Chinese auto detected)
-func (s *translator) Translate(word string) (string, error) {
-	result, err := s.dic.Translate(word)
+func (t *translator) Translate(word string) (string, error) {
+	raw, err := t.dic.Translate(word)
+	if err != nil {
+		return "", err
+	}
+
+	result, err := t.dic.PrettyPrint(raw)
 	if err != nil {
 		return "", err
 	}
