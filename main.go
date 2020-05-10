@@ -66,7 +66,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "provider",
 				Aliases:     []string{"p"},
-				Value:       "google",
+				Value:       "youdao",
 				Usage:       "translator providers, e.g. google, youdao",
 				Destination: &provider,
 			},
