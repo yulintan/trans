@@ -1,5 +1,5 @@
-module github.com/yulintan/translate
+module github.com/yulintan/trans
 
 go 1.13
 
-require github.com/urfave/cli/v2 v2.0.0-alpha.2
+require github.com/urfave/cli/v2 v2.3.0

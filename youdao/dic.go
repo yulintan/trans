@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/yulintan/translate/translator"
+	"github.com/yulintan/trans/translator"
 )
 
 type dic struct {

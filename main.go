@@ -6,9 +6,9 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-	"github.com/yulintan/translate/google"
-	"github.com/yulintan/translate/translator"
-	"github.com/yulintan/translate/youdao"
+	"github.com/yulintan/trans/google"
+	"github.com/yulintan/trans/translator"
+	"github.com/yulintan/trans/youdao"
 )
 
 var cfg translator.Config
@@ -52,7 +52,7 @@ func main() {
 	var tl, provider, brief string
 
 	app := &cli.App{
-		Name:    "translate",
+		Name:    "trans",
 		Version: "v0.1.1",
 		Usage:   "translation words/sentencse in your terminal",
 		Flags: []cli.Flag{
